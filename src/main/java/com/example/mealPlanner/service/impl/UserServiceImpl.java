@@ -1,11 +1,9 @@
 package com.example.mealPlanner.service.impl;
 
 import com.example.mealPlanner.repository.UserRepository;
+import com.example.mealPlanner.service.AuthenticationService;
 import com.example.mealPlanner.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,9 +11,6 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
-    @Override
-    public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
 }
