@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -39,9 +38,9 @@ public class MealMapper {
     }
 
     public PageResponseDto<MealDto> toDto(Page<Meal> meals) {
-        List<MealDto> mealsDtos = meals.getContent().stream()
+        List<MealDto> mealDtos = meals.getContent().stream()
                 .map(this::toDto)
-                .collect(Collectors.toList());
-        return new PageResponseDto<>(mealsDtos, meals.getNumber(), meals.getNumberOfElements(), meals.getTotalElements());
+                .toList();
+        return new PageResponseDto<>(mealDtos, meals.getNumber(), meals.getNumberOfElements(), meals.getTotalElements());
     }
 }

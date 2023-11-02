@@ -17,12 +17,12 @@ public class MealController {
 
     @GetMapping("/{id}")
     public MealDto getMeal(@PathVariable Long id) {
-        return mealService.getMealByUser(id);
+        return mealService.getMeal(id);
     }
 
     @GetMapping
     public PageResponseDto<MealDto> getMeals(@ModelAttribute @Valid PageRequestDto pageRequestDto) {
-        return mealService.getMealsByUser(pageRequestDto);
+        return mealService.getMeals(pageRequestDto);
     }
 
     @PostMapping

@@ -11,7 +11,7 @@ public interface MealService {
 
     void deleteMeal(Long id);
 
-    MealDto getMealByUser(Long id);
+    MealDto getMeal(Long id);
 
-    PageResponseDto<MealDto> getMealsByUser(PageRequestDto pageRequestDto);
+    PageResponseDto<MealDto> getMeals(PageRequestDto pageRequestDto);
 }
