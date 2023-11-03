@@ -11,6 +11,7 @@ import com.example.mealPlanner.mapper.MealMapper;
 import com.example.mealPlanner.repository.MealRepository;
 import com.example.mealPlanner.service.AuthenticationService;
 import com.example.mealPlanner.service.MealService;
+import com.example.mealPlanner.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ public class MealServiceImpl implements MealService {
 
     private final MealRepository mealRepository;
     private final AuthenticationService authenticationService;
+    private final UserService userService;
     private final MealMapper mealMapper;
 
     @Override
@@ -42,14 +44,15 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public MealDto createMeal(MealDto mealDto) {
-        Meal meal = mealMapper.toEntity(mealDto);
+        User user = userService.getUserById(mealDto.getUserId());
+        Meal meal = mealMapper.toEntity(mealDto, user);
         mealRepository.save(meal);
         return mealMapper.toDto(meal);
     }
 
     @Override
     public MealDto updateMeal(MealDto mealDto) {
-        User user = authenticationService.getAuthenticatedUser();
+        User user = userService.getUserById(mealDto.getUserId());
         Meal meal = getMealByUser(mealDto.getId(), user);
         meal.setName(mealDto.getName());
         meal.setCalories(mealDto.getCalories());

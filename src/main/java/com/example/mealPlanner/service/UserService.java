@@ -3,6 +3,7 @@ package com.example.mealPlanner.service;
 import com.example.mealPlanner.dto.PageRequestDto;
 import com.example.mealPlanner.dto.PageResponseDto;
 import com.example.mealPlanner.dto.UserDto;
+import com.example.mealPlanner.entity.User;
 
 public interface UserService {
 
@@ -13,4 +14,6 @@ public interface UserService {
     UserDto createUser(UserDto userDto);
 
     void deleteUser(Long id);
+
+    User getUserById(Long id);
 }

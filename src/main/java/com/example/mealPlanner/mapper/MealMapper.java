@@ -4,7 +4,6 @@ import com.example.mealPlanner.dto.MealDto;
 import com.example.mealPlanner.dto.PageResponseDto;
 import com.example.mealPlanner.entity.Meal;
 import com.example.mealPlanner.entity.User;
-import com.example.mealPlanner.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -15,16 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MealMapper {
 
-    private final AuthenticationService authenticationService;
-
-    public Meal toEntity(MealDto mealDto) {
-        User authenticatedUser = authenticationService.getAuthenticatedUser();
-
+    public Meal toEntity(MealDto mealDto, User user) {
         return Meal.builder()
                 .name(mealDto.getName())
                 .calories(mealDto.getCalories())
                 .ateAt(mealDto.getAteAt())
-                .user(authenticatedUser)
+                .user(user)
                 .build();
     }
 

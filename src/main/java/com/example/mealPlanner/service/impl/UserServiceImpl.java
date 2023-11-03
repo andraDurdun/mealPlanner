@@ -62,12 +62,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto) {
         validateEmailIsNotUsed(userDto);
-        User user = getUser(userDto);
+        User user = getUserById(userDto.getId());
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setRole(userDto.getRole());
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with id: " + id + " not found"));
     }
 
     private void validateEmailIsNotUsed(UserDto userDto) {
@@ -81,9 +86,5 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new DuplicateResourceException("User with email: " + email + " already exists.");
         }
-    }
-
-    private User getUser(UserDto userDto) {
-        return userRepository.findById(userDto.getId()).orElseThrow(() -> new ResourceNotFoundException("User with id: " + userDto.getId() + " not found"));
     }
 }

@@ -28,6 +28,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
+        //todo change deprecated
         return Jwts.builder()
                 .setClaims(new HashMap<>())
                 .setSubject(userDetails.getUsername())

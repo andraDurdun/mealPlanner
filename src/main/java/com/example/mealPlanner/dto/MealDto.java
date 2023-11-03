@@ -1,6 +1,5 @@
 package com.example.mealPlanner.dto;
 
-import com.example.mealPlanner.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +17,5 @@ public class MealDto {
     private String name;
     private LocalDateTime ateAt;
     private Integer calories;
-    private User user;
+    private Long userId;
 }

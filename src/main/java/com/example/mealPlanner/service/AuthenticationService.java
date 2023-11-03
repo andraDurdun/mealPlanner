@@ -11,7 +11,5 @@ public interface AuthenticationService {
 
     JwtAuthenticationResponse signIn(SignInRequest request);
 
-    String getAuthenticatedUserEmail();
-
     User getAuthenticatedUser();
 }
