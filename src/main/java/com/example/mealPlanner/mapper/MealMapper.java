@@ -18,7 +18,8 @@ public class MealMapper {
         return Meal.builder()
                 .name(mealDto.getName())
                 .calories(mealDto.getCalories())
-                .ateAt(mealDto.getAteAt())
+                .date(mealDto.getDate())
+                .time(mealDto.getTime())
                 .user(user)
                 .build();
     }
@@ -28,7 +29,8 @@ public class MealMapper {
                 .id(meal.getId())
                 .name(meal.getName())
                 .calories(meal.getCalories())
-                .ateAt(meal.getAteAt())
+                .date(meal.getDate())
+                .time(meal.getTime())
                 .build();
     }
 

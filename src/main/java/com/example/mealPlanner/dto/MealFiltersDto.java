@@ -12,12 +12,9 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MealDto {
-    //todo validation
-    private Long id;
-    private String name;
-    private LocalDate date;
-    private LocalTime time;
-    private Integer calories;
-    private Long userId;
+public class MealFiltersDto {
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+    private LocalTime timeFrom;
+    private LocalTime timeTo;
 }

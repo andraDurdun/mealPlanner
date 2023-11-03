@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Data
@@ -22,7 +23,8 @@ public class Meal {
     private Long id;
     private String name;
     // todo check date type
-    private LocalDateTime ateAt;
+    private LocalDate date;
+    private LocalTime time;
     private Integer calories;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
