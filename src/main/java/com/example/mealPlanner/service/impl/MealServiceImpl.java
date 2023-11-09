@@ -56,7 +56,8 @@ public class MealServiceImpl implements MealService {
         Meal meal = getMealByUser(mealDto.getId(), user);
         meal.setName(mealDto.getName());
         meal.setCalories(mealDto.getCalories());
-        meal.setAteAt(mealDto.getAteAt());
+        meal.setDate(mealDto.getDate());
+        meal.setTime(mealDto.getTime());
 
         return mealMapper.toDto(meal);
     }
