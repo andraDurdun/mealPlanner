@@ -15,6 +15,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/me")
+    public UserDto getUser() {
+        return userService.getUser();
+    }
+
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
         return userService.createUser(userDto);

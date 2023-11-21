@@ -9,6 +9,7 @@ import com.example.mealPlanner.exception.DuplicateResourceException;
 import com.example.mealPlanner.exception.ResourceNotFoundException;
 import com.example.mealPlanner.mapper.UserMapper;
 import com.example.mealPlanner.repository.UserRepository;
+import com.example.mealPlanner.service.AuthenticationService;
 import com.example.mealPlanner.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +27,17 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     @Value("${user.initial.password}")
     private String initialPassword;
+
+    @Override
+    public UserDto getUser() {
+        User authenticatedUser = authenticationService.getAuthenticatedUser();
+        return userMapper.toDto(authenticatedUser);
+    }
 
     @Override
     public PageResponseDto<UserDto> getUsers(PageRequestDto pageRequestDto) {
