@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/meals/**").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/users/me").hasAnyAuthority("ADMIN", "MANAGER", "USER")
                         .requestMatchers("/users/**").hasAnyAuthority("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
                 )
