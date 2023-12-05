@@ -1,6 +1,7 @@
 package com.example.mealPlanner.service;
 
 import com.example.mealPlanner.dto.MealDto;
+import com.example.mealPlanner.dto.MealFiltersDto;
 import com.example.mealPlanner.dto.PageRequestDto;
 import com.example.mealPlanner.dto.PageResponseDto;
 
@@ -13,5 +14,5 @@ public interface MealService {
 
     MealDto getMeal(Long id);
 
-    PageResponseDto<MealDto> getMeals(PageRequestDto pageRequestDto);
+    PageResponseDto<MealDto> getMeals(PageRequestDto pageRequestDto, MealFiltersDto mealFiltersDto);
 }

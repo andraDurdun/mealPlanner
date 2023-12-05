@@ -1,6 +1,7 @@
 package com.example.mealPlanner.controller;
 
 import com.example.mealPlanner.dto.MealDto;
+import com.example.mealPlanner.dto.MealFiltersDto;
 import com.example.mealPlanner.dto.PageRequestDto;
 import com.example.mealPlanner.dto.PageResponseDto;
 import com.example.mealPlanner.service.MealService;
@@ -22,8 +23,8 @@ public class MealController {
     }
 
     @GetMapping
-    public PageResponseDto<MealDto> getMeals(@ModelAttribute @Valid PageRequestDto pageRequestDto) {
-        return mealService.getMeals(pageRequestDto);
+    public PageResponseDto<MealDto> getMeals(@ModelAttribute @Valid PageRequestDto pageRequestDto, @ModelAttribute MealFiltersDto mealFiltersDto) {
+        return mealService.getMeals(pageRequestDto, mealFiltersDto);
     }
 
     @PostMapping

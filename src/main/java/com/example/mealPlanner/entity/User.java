@@ -39,4 +39,17 @@ public class User {
         meals.remove(meal);
         meal.setUser(null);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", meals=" + meals +
+                '}';
+    }
 }

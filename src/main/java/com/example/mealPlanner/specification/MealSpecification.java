@@ -6,16 +6,23 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 public class MealSpecification implements Specification<Meal> {
 
-    private MealFiltersDto mealFiltersDto;
+    private final MealFiltersDto mealFiltersDto;
+    private Long userId;
+
+    public MealSpecification(MealFiltersDto mealFiltersDto) {
+        this.mealFiltersDto = mealFiltersDto;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     @Override
     public Predicate toPredicate(Root<Meal> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -26,17 +33,20 @@ public class MealSpecification implements Specification<Meal> {
         }
 
         if (mealFiltersDto.getDateTo() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), mealFiltersDto.getDateFrom()));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"), mealFiltersDto.getDateTo()));
         }
 
         if (mealFiltersDto.getTimeFrom() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time"), mealFiltersDto.getTimeFrom()));
         }
 
-        if (mealFiltersDto.getTimeFrom() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("time"), mealFiltersDto.getTimeFrom()));
+        if (mealFiltersDto.getTimeTo() != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("time"), mealFiltersDto.getTimeTo()));
         }
 
+        if (userId != null) {
+            predicates.add(criteriaBuilder.equal(root.get("user").get("id"), userId));
+        }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }

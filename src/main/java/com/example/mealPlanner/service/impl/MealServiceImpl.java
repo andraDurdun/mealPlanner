@@ -1,6 +1,7 @@
 package com.example.mealPlanner.service.impl;
 
 import com.example.mealPlanner.dto.MealDto;
+import com.example.mealPlanner.dto.MealFiltersDto;
 import com.example.mealPlanner.dto.PageRequestDto;
 import com.example.mealPlanner.dto.PageResponseDto;
 import com.example.mealPlanner.entity.Meal;
@@ -12,6 +13,7 @@ import com.example.mealPlanner.repository.MealRepository;
 import com.example.mealPlanner.service.AuthenticationService;
 import com.example.mealPlanner.service.MealService;
 import com.example.mealPlanner.service.UserService;
+import com.example.mealPlanner.specification.MealSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,9 +38,10 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public PageResponseDto<MealDto> getMeals(PageRequestDto pageRequestDto) {
+    public PageResponseDto<MealDto> getMeals(PageRequestDto pageRequestDto, MealFiltersDto mealFiltersDto) {
         User user = authenticationService.getAuthenticatedUser();
-        Page<Meal> meals = getMealsByUser(pageRequestDto, user);
+        MealSpecification mealSpecification = new MealSpecification(mealFiltersDto);
+        Page<Meal> meals = getMealsByUser(pageRequestDto, mealSpecification, user);
         return mealMapper.toDto(meals);
     }
 
@@ -81,11 +84,12 @@ public class MealServiceImpl implements MealService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find meal with id: " + id + " for user with id: " + user.getId()));
     }
 
-    private Page<Meal> getMealsByUser(PageRequestDto pageRequestDto, User user) {
-        if (Role.ADMIN.equals(user.getRole())) {
-            return mealRepository.findAll(PageRequest.of(pageRequestDto.getPage(), pageRequestDto.getPageSize()));
+    private Page<Meal> getMealsByUser(PageRequestDto pageRequestDto, MealSpecification mealSpecification, User user) {
+        if (Role.USER.equals(user.getRole())) {
+            mealSpecification.setUserId(user.getId());
         }
-        return mealRepository.findAllByUser(user, PageRequest.of(pageRequestDto.getPage(), pageRequestDto.getPageSize()));
+
+        return mealRepository.findAll(mealSpecification, PageRequest.of(pageRequestDto.getPage(), pageRequestDto.getPageSize()));
     }
 
 }
